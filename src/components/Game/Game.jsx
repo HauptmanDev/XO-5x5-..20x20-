@@ -12,6 +12,7 @@ class Game extends React.Component {
             }],
             stepNumber: 0,
             xIsNext: true,
+            valueXO: 5,
         };
     };
 
@@ -39,6 +40,16 @@ class Game extends React.Component {
         });
     };
 
+    changeValueXO(e) {
+        if (e.currentTarget.value >= 5 && e.currentTarget.value <= 20) {
+            this.setState({
+                valueXO: +e.currentTarget.value
+            });
+        } else {
+            alert('Stop')
+        }
+    };
+
     render() {
         const history = this.state.history;
         const current = history[this.state.stepNumber];
@@ -63,7 +74,9 @@ class Game extends React.Component {
         return (
             <div className="Game">
                 <div className="Game-board">
+                    <input type="number" onChange={(e) => this.changeValueXO(e)} value={this.state.valueXO}/>
                     <Board
+                        valueXO={this.state.valueXO}
                         squares={current.squares}
                         onClick={(i) => this.handleClick(i)}
                     />

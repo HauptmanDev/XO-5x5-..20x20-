@@ -5,4 +5,5 @@
     background-color: black;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
