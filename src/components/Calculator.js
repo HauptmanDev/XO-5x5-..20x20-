@@ -1,19 +1,34 @@
-export function calculateWinner(squares) {
-    const lines = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6],
-    ];
-    for (let i = 0; i < lines.length; i++) {
-        const [a, b, c] = lines[i];
-        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-            return squares[a];
-        }
-    }
-    return null;
-}
+// export function calculateWinner(cellX,cellY) {
+//     let res = null;
+//     let newFig = getFig(cellX,cellY);
+//     if( ! newFig ) return false;
+//
+//     res = res || checkLine( cellX, cellY, 1, 0 ); //horizontal
+//     res = res || checkLine( cellX, cellY, 0, 1 ); //vertical
+//     res = res || checkLine( cellX, cellY, 1, 1 ); //diagonal 45
+//     res = res || checkLine( cellX, cellY, 1, -1 ); //diagonal 135
+//
+//     return res;
+//
+//     function getFig( x, y ){
+//         return Model.Field[x] && Model.Field[x][y] ? Model.Field[x][y] : 'b';
+//     }
+//
+//     function checkLine( x, y, dx, dy ){
+//         x = +x;
+//         y = +y;
+//         let score = 0;
+//         while( getFig( x - dx, y - dy ) == newFig ){
+//             x -= dx;
+//             y -= dy;
+//         }
+//         while( getFig( x, y ) == newFig ){
+//             x += dx;
+//             y += dy;
+//             score++;
+//         }
+//         if( score >= 5 )
+//             return true;
+//         return false;
+//     }
+// }

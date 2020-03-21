@@ -28,3 +28,13 @@
     height: 95vh;
     width: 75vw;
 }
+
+.Game-board-size {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    height: 95vh;
+    width: 20vw;
+}
