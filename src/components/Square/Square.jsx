@@ -1,19 +1,24 @@
-import React from "react";
+import React, {Component} from "react";
 import './Square.css'
-// Компонент Square
-// ========================================
-// Функция возвращает клетку для рендера при клике по ней
-// передается событие в родительский компонент, при клике по клетке
-// благодаря props.value отображается X или O
-function Square(props) {
-    let onClickSquare = () => {
-        props.onClick(props.rowSquare, props.colSquare, props.numberSquare);
+
+class Square extends Component {
+    // Компонент Square
+    // Функция возвращает клетку для рендера при клике по ней
+    // передается событие в родительский компонент, при клике по клетке
+    // благодаря props.status отображается X или O.
+    // При клике callback передает координаты и номер клетки в родительский компонент.
+
+    onClickSquare = () => {
+        this.props.onClick(this.props.rowSquare, this.props.colSquare, this.props.numberSquare);
     };
-    return (
-        <button className="square" onClick={onClickSquare}>
-            {props.status}
-        </button>
-    );
+
+    render() {
+        return (
+            <button className="square" onClick={this.onClickSquare}>
+                {this.props.status}
+            </button>
+        );
+    }
 }
 
 export default Square;

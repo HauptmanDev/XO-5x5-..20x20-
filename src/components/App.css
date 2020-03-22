@@ -1,3 +1,9 @@
+body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
 .App  {
     display: flex;
     width: 100vw;
@@ -5,5 +11,4 @@
     background-color: black;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
 }

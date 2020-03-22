@@ -1,16 +1,12 @@
-.Game-board {
+.Game-board-size {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: white;
     height: 95vh;
-    width: 65vw;
+    width: 20vw;
     border: 2px solid white;
-}
-
-.board-row:after {
-    clear: both;
-    content: "";
-    display: table;
+    border-radius: 20px;
+    margin: 10px;
 }

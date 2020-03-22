@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
     mode: "development",
     entry: {
-        main:['@babel/polyfill','./src/index.js']
+        main: ['@babel/polyfill', './src/index.js']
     },
     output: {
         filename: "index-bundle.js",
@@ -13,25 +13,25 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [
-                            '@babel/preset-env',
-                        ]
-                    }
-                }
-            },
-            {
                 test: /\.jsx$/,
                 exclude: /node_modules/,
                 loader: {
                     loader: 'babel-loader',
                     options: {
                         presets: [
-                            '@babel/preset-react',
+                            "@babel/preset-env", "@babel/preset-react"
+                        ]
+                    }
+                }
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            "@babel/preset-env", "@babel/preset-react"
                         ]
                     }
                 }
@@ -42,7 +42,7 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|svg|gif)$/,
-                use:['file-loader']
+                use: ['file-loader']
             }
         ]
     },
