@@ -1,0 +1,11 @@
+.Game-info {
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    color: white;
+    flex-direction: column;
+    width: 20vw;
+    height: 95vh;
+    justify-content: flex-start;
+    overflow-y: scroll;
+}

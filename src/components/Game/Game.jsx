@@ -1,30 +1,39 @@
 import React from "react";
 import './Game.css'
 import Board from "../Board/Board";
-import {calculateWinner} from "../Calculator";
 import Parameters from "../Parameters/Parameters";
+import History from "../History/History";
+import {calculateWinner} from "../Calculator";
 
 class Game extends React.Component {
+    //Локальный стэйт для хранения данных.
     state = {
-        sizeBoard: 5,
         show: false,
-        disabledSubmit: false,
         history: [{
             squares: Array(25).fill(null)
         }],
+        sizeBoard: 5,
+        disabledSubmit: false,
         stepNumber: 0,
         xIsNext: true,
-        status: '',
-        // minToWin: 3,
+        winner: '',
+        // minToWin: 5,
     };
+
     jumpTo = (step) => {
+        // Принимает номер шага в игре на который надо перейти и меняет значения
+        // в this.state.stepNumber и this.state.xIsNext
         this.setState({
             stepNumber: step,
             xIsNext: (step % 2) === 0,
+            show: true,
+            winner: '',
         });
     };
 
     changeSizeBoard = (size) => {
+        // Изменяет размер поля от 5 до 20 - значение получает из компоненты Parameters.
+        // Вносит в историю объект с массивов '' значений.
         if (size >= 5 && size <= 20) {
             this.setState({
                 sizeBoard: +size,
@@ -38,6 +47,7 @@ class Game extends React.Component {
     };
 
     submitBoard = () => {
+        // Выводит поле на экран.
         this.setState({
             show: true,
             disabledSubmit: true,
@@ -45,6 +55,7 @@ class Game extends React.Component {
     };
 
     resetBoard = () => {
+        //Сброс состояния партии в игре.
         this.setState({
             show: false,
             disabledSubmit: false,
@@ -57,14 +68,18 @@ class Game extends React.Component {
     };
 
     handleClick = (row, col, num) => {
+        // Копируем в history массив с объектом созданный из текущего состояние this.state.history
         const history = this.state.history.slice(0, this.state.stepNumber + 1);
-        // const current = history[history.length - 1];
-        // const squares = current.squares.slice();
+        // Работа с шагами в игре
         let locSquares = this.state.history[this.state.stepNumber].squares.slice();
         if (locSquares[num] === 'X' || locSquares[num] === 'O') {
             alert('Занято')
         } else {
+            // В зависимости от того чей ход передаем для заполнения поля в массиве squares буквами X или O
             locSquares[num] = this.state.xIsNext ? 'X' : 'O';
+            // Добавлем в this.state.history объект с массивом содержащим последнее состояние игрового поля
+            // обновляем значение this.state.stepNumber прописывая номер текущего хода
+            // передаем ход следующему игроку записывая в this.state.xIsNext - true или false
             this.setState({
                 xIsNext: !this.state.xIsNext,
                 history: history.concat({
@@ -73,23 +88,17 @@ class Game extends React.Component {
                 stepNumber: history.length,
             });
         }
-        if (calculateWinner(locSquares, this.state.sizeBoard, num)) {
-            return
+        // Запуск проверки победителя
+        let winner = calculateWinner(locSquares, this.state.sizeBoard, num);
+        if (winner) {
+            this.setState({
+                show: false,
+                winner: winner,
+            })
         }
     };
 
     render() {
-        const moves = this.state.history.map((step, move) => {
-            const desc = move ?
-                'Go to move #' + move :
-                'Go to game start';
-            return (
-                <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
-                </li>
-            );
-        });
-
         return (
             <div className="Game">
                 <Parameters sizeBoard={this.state.sizeBoard}
@@ -102,12 +111,9 @@ class Game extends React.Component {
                            cols={this.state.sizeBoard}
                            squares={this.state.history[this.state.stepNumber].squares}
                            onClick={(row, col, num) => this.handleClick(row, col, num)}/>
-                           : 'Size and Submit'
+                    : 'Size and Submit'
                 }
-                <div className="Game-info">
-                    <div>{this.state.status}</div>
-                    <ol>{moves}</ol>
-                </div>
+                <History state={this.state} jumpTo={this.jumpTo}/>
             </div>
         );
     }

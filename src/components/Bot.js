@@ -1,4 +1,4 @@
-export function calculateWinner(Square, size, num) {
+export function Bot(Square, size, num) {
 
     let createBoard = (Square, size) => {
         let newSquare = Square.map((el, index) => {
@@ -36,10 +36,14 @@ export function calculateWinner(Square, size, num) {
     let newFig = getFig(cellX, cellY);
     if (!newFig) return false;
 
-    res = res || checkLine(cellX, cellY, 1, 0); //Проверка по горизонтали
-    res = res || checkLine(cellX, cellY, 0, 1); //Проверка по вертикали
-    res = res || checkLine(cellX, cellY, 1, 1); //Проверка по диагонали 45
-    res = res || checkLine(cellX, cellY, 1, -1); //Проверка по диагонали 135
+    let answer = ()=> {
+        let a = res || checkLine(cellX, cellY, 1, 0); //Проверка по горизонтали
+        let b = res || checkLine(cellX, cellY, 0, 1); //Проверка по вертикали
+        let c = res || checkLine(cellX, cellY, 1, 1); //Проверка по диагонали 45
+        let d = res || checkLine(cellX, cellY, 1, -1); //Проверка по диагонали 135
+    };
+
+
     return res;
 
     function getFig(x, y) {
