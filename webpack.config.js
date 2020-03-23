@@ -1,4 +1,6 @@
 const path = require("path");
+const lessToJs = require('less-vars-to-js');
+const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, './ant-theme-vars.less'), 'utf8'));
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
@@ -20,6 +22,9 @@ module.exports = {
                     options: {
                         presets: [
                             "@babel/preset-env", "@babel/preset-react"
+                        ],
+                        plugins: [
+                            ['import', {libraryName: "antd", style: true}]
                         ]
                     }
                 }
@@ -32,6 +37,9 @@ module.exports = {
                     options: {
                         presets: [
                             "@babel/preset-env", "@babel/preset-react"
+                        ],
+                        plugins: [
+                            ['import', {libraryName: "antd", style: true}]
                         ]
                     }
                 }
@@ -43,6 +51,18 @@ module.exports = {
             {
                 test: /\.(png|jpg|svg|gif)$/,
                 use: ['file-loader']
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    {loader: "style-loader"},
+                    {loader: "css-loader"},
+                    {loader: "less-loader",
+                        options: {
+                            modifyVars: themeVariables
+                        }
+                    }
+                ]
             }
         ]
     },

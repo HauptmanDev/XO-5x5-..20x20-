@@ -111,7 +111,7 @@ class Game extends React.Component {
                            cols={this.state.sizeBoard}
                            squares={this.state.history[this.state.stepNumber].squares}
                            onClick={(row, col, num) => this.handleClick(row, col, num)}/>
-                    : 'Size and Submit'
+                    : <div className='Start'>Size and Submit!!!</div>
                 }
                 <History state={this.state} jumpTo={this.jumpTo}/>
             </div>

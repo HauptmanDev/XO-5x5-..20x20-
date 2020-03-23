@@ -1,5 +1,6 @@
 import React from "react";
 import './History.css'
+import {Button} from "antd";
 
 class History extends React.Component {
     render() {
@@ -11,7 +12,7 @@ class History extends React.Component {
                 'Go to game start';
             return (
                 <li key={move}>
-                    <button onClick={() => this.props.jumpTo(move)}>{desc}</button>
+                    <Button onClick={() => this.props.jumpTo(move)} size='small'>{desc}</Button>
                 </li>
             );
         });
@@ -30,7 +31,7 @@ class History extends React.Component {
 
         return (
             <div className="Game-info">
-                <div>{status}</div>
+                <div className='status'><span>{status}</span></div>
                 <ol>{moves}</ol>
             </div>
         );
