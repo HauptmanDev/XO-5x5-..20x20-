@@ -12,7 +12,8 @@ class History extends React.Component {
                 'Go to game start';
             return (
                 <li key={move}>
-                    <Button onClick={() => this.props.jumpTo(move)} size='small'>{desc}</Button>
+                    <Button onClick={() => this.props.jumpTo(move)} size='small'
+                            disabled={move%2}>{desc}</Button>
                 </li>
             );
         });

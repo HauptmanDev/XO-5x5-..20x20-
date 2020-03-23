@@ -4,13 +4,14 @@ import Board from "../Board/Board";
 import Parameters from "../Parameters/Parameters";
 import History from "../History/History";
 import {calculateWinner} from "../Calculator";
+import {BotRandom} from "../Bot";
 
 class Game extends React.Component {
     //Локальный стэйт для хранения данных.
     state = {
         show: false,
         history: [{
-            squares: Array(25).fill(null)
+            squares: Array(25).fill('')
         }],
         sizeBoard: 5,
         disabledSubmit: false,
@@ -64,6 +65,7 @@ class Game extends React.Component {
             history: [{
                 squares: Array(25).fill('')
             }],
+            xIsNext: true,
         });
     };
 
@@ -96,6 +98,38 @@ class Game extends React.Component {
                 winner: winner,
             })
         }
+        //Запускает функцию клик бота
+        setTimeout(() => {
+            this.botClick(locSquares)
+        }, 500)
+    };
+
+    botClick = (locSquares) => {
+        //Принцип работы как у клика человеком
+        const history = this.state.history.slice(0, this.state.stepNumber + 1);
+        let newSquares = locSquares.slice();
+        //Передаем последний Squares из history
+        let num = BotRandom(locSquares);
+        // В зависимости от того чей ход передаем для заполнения поля в массиве squares буквами X или O
+        newSquares[num] = this.state.xIsNext ? 'X' : 'O';
+        // Добавлем в this.state.history объект с массивом содержащим последнее состояние игрового поля
+        // обновляем значение this.state.stepNumber прописывая номер текущего хода
+        // передаем ход следующему игроку записывая в this.state.xIsNext - true или false
+        this.setState({
+            xIsNext: !this.state.xIsNext,
+            history: history.concat({
+                squares: newSquares
+            }),
+            stepNumber: history.length,
+        });
+        //Снова запускаем функции Winner
+        let winner = calculateWinner(newSquares, this.state.sizeBoard, num);
+        if (winner) {
+            this.setState({
+                show: false,
+                winner: winner,
+            })
+        }
     };
 
     render() {
@@ -113,7 +147,7 @@ class Game extends React.Component {
                            onClick={(row, col, num) => this.handleClick(row, col, num)}/>
                     : <div className='Start'>Size and Submit!!!</div>
                 }
-                <History state={this.state} jumpTo={this.jumpTo}/>
+                <History state={this.state} jumpTo={this.jumpTo} xIsNext={this.state.xIsNext}/>
             </div>
         );
     }

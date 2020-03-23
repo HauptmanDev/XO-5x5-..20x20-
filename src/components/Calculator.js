@@ -7,7 +7,7 @@ export function calculateWinner(Square, size, num) {
             let newElem = {
                 row: row,
                 col: col,
-                value: el ? el : null
+                value: el ? el : ''
             };
             return newElem;
         });

@@ -1,78 +1,14 @@
-export function Bot(Square, size, num) {
-
-    let createBoard = (Square, size) => {
-        let newSquare = Square.map((el, index) => {
-            let row = Math.floor(index / size);
-            let col = index % size;
-            let newElem = {
-                row: row,
-                col: col,
-                value: el ? el : null
-            };
-            return newElem;
-        });
-
-        let newBoard = [];
-        for (let j = 0; j < size; j++) {
-            let arrRows = [];
-            for (let i = 0; i < size; i++) {
-                arrRows[i] = {row: null, col: null, value: ''}
-            }
-            newBoard[j] = arrRows;
-        }
-        newSquare.forEach((el) => {
-            newBoard[el.row][el.col] = el
-        });
-        return newBoard;
+export function BotRandom(Square) {
+    let choiceNum = () => {
+          let newSquares = [];
+            Square.forEach((el, index) => {
+                if (el === '') {
+                    newSquares.push(index)
+                }
+            });
+            let newIndex = Math.floor(Math.random() * (newSquares.length - 1));
+            console.log(newSquares[newIndex]);
+            return newSquares[newIndex];
     };
-
-    let boardArr = createBoard(Square, size);
-
-
-    let res = null;
-    let cellX = Math.floor(num / size);
-    let cellY = num % size;
-
-    let newFig = getFig(cellX, cellY);
-    if (!newFig) return false;
-
-    let answer = ()=> {
-        let a = res || checkLine(cellX, cellY, 1, 0); //Проверка по горизонтали
-        let b = res || checkLine(cellX, cellY, 0, 1); //Проверка по вертикали
-        let c = res || checkLine(cellX, cellY, 1, 1); //Проверка по диагонали 45
-        let d = res || checkLine(cellX, cellY, 1, -1); //Проверка по диагонали 135
-    };
-
-
-    return res;
-
-    function getFig(x, y) {
-        if (x >= 0 && x < size) {
-            if (y >= 0 && y < size) {
-                return boardArr[x][y].value;
-            }
-            return 'b'
-        } else {
-            return 'b'
-        }
-    }
-
-    function checkLine(x, y, dx, dy) {
-        x = +x;
-        y = +y;
-        let score = 0;
-        while (getFig(x - dx, y - dy) == newFig) {
-            x -= dx;
-            y -= dy;
-        }
-        while (getFig(x, y) == newFig) {
-            x += dx;
-            y += dy;
-            score++;
-        }
-        if (score >= 5) {
-            return newFig;
-        }
-        return false;
-    }
+    return choiceNum()
 }
